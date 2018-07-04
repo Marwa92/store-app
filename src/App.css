@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   background-color: SlateBlue;
+  align-items: center;
 }
 
 .App-logo {
@@ -28,6 +29,6 @@
   to { transform: rotate(360deg); }
 }
 
-.table{
-  align-items: center;
+h1{
+  font-family: Times, Times New Roman, Georgia, serif;
 }
