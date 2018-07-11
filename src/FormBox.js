@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react'
-import { Dropdown } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Form } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 import BE from './BE';
 
 class FormBox extends React.Component {
@@ -8,7 +9,8 @@ class FormBox extends React.Component {
   constructor(props) {
   super(props);
   this.state = { value: '',
-  collections: []
+  collections: [{value: 0, text: "All"}],
+  currentValue: 0,
 };
 
   this.handleChange = this.handleChange.bind(this);
@@ -17,9 +19,12 @@ class FormBox extends React.Component {
 }
 
 async componentDidMount() {
-  const collections = await BE.getCollection();
+  const collectionsList = await BE.getCollection();
+  const options= collectionsList.map(({id, name}) => ({value:id , text:name
+ }));
+ const { collections }=this.state;
   console.log('collections from db:', collections);
-  this.setState({ collections });
+  this.setState({ collections: collections.concat(options) });
 }
 
 handleChange(event) {
@@ -35,25 +40,37 @@ resetValue(e) {
   this.props.handleSubmit(value, e); // handle submit for add button
 }
 
-addCollection(e, { value }) {
+async addCollection(e, { value }) {
+
+  const { collections } = this.state;
+  console.log('collections:', collections);
+  console.log('New collection value:', value);
+  const addCollection = await BE.postCollection(value);
+  console.log('addcolection id, ' , addCollection);
   this.setState({
-    collections: [{ text: value, value }, ...this.state.collections],
+    // collections: [{ text: value, value: addCollection.id }, ...this.state.collections],
+    collections: collections.concat(addCollection),
   });
+  console.log ("collections test, ", collections );
+  e.preventDefault();
 }
 
 chooseCollection(e, { value }){
+  console.log('value ,', value);
    this.setState({ currentValue: value });
+   this.props.displayTasks(value);
  };
 
   render(){
      const { currentValue, collections } = this.state;
-     // const CollectionsList = collections.map((collection, index) => (
-     // //   return(<option key={collection.id} value={collection.name}>{collection.name}</option>)
+
+
     return (
       <div>
+
         <Dropdown
-          options={this.state.collections}
-          placeholder='Add new list'
+          options={collections}
+          placeholder='Add new collection'
           search
           selection
           fluid
@@ -63,10 +80,12 @@ chooseCollection(e, { value }){
           onChange={this.chooseCollection}
         />
 
+
+
         <Form onSubmit={(e) => this.resetValue(e)} style={{paddingBottom:"20px 0px 0px 0px", margin:"auto", width:"22%"}}>
         <Form.Group>
-        <Form.Input  placeholder="Enter task" required value={this.state.value} onChange={this.handleChange} />
-          <Form.Button primary content="Add"/>
+        <Form.Input  placeholder="Enter task" required value={this.state.value} onChange={this.handleChange} disabled={currentValue === 0}/>
+          <Form.Button primary content="Add" disabled={currentValue === 0}/>
           </Form.Group>
         </Form>
       </div>

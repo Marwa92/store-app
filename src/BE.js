@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import axios from 'axios';
 
 const port = 'http://localhost:3001';
 class TasksList extends Component {
-  static async postTasks(newTask) {
+  static async postTasks(newTask, collectionId) {
     try {
       const response = await axios.post(`${port}/tasks`, {
         title: newTask,
-        completed: false
+        completed: false,
+        collection: collectionId,
       });
       console.log(response.data);
       return (response.data);
@@ -45,7 +46,7 @@ class TasksList extends Component {
   static async getCollection() {
     try {
       const response = await axios.get(`${port}/collections`);
-      console.log(response.data);
+      console.log('Collections from db', response.data);
       return (response.data);
     } catch (error) {
       console.error(error);
