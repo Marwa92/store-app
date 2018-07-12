@@ -12,28 +12,28 @@
       "title": "Open Atom",
       "completed": true,
       "collection": 1,
-      "user": 1
+      "user": 2
     },
     {
       "id": 3,
       "title": "Have fun",
       "completed": false,
       "collection": 2,
-      "user": 1
+      "user": 3
     },
     {
       "id": 4,
       "title": "Sleep",
       "completed": false,
       "collection": 2,
-      "users": 1
+      "user": 1
     },
     {
       "id": 5,
       "title": "watch movie",
       "completed": false,
       "collection": 2,
-      "user": 1
+      "user": 4
     }
   ],
   "collections": [
@@ -62,20 +62,20 @@
     {
       "id": 1,
       "name": "Ahmed",
-      "coLor": "#ff8080"
+      "color": "violet"
     },
     {
       "id": 2,
       "name": "Esraa",
-      "coLor": "pink"
+      "color": "pink"
     },  {
         "id": 3,
         "name": "Marwa",
-        "coLor": "blue"
+        "color": "blue"
       },  {
           "id": 4,
           "name": "Mohamed",
-          "coLor": " #66ffc2"
+          "color": "purple"
         }
   ]
 }

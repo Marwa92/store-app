@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Table, Button } from 'semantic-ui-react';
+import { Table, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
@@ -88,16 +88,21 @@ class Home extends Component {
 
   accessUser(tasks, users) {
     const tasksUser = tasks;
-    tasks.forEach((task) => {
-      if (task.user) {
+    for (let j = 0; j < tasksUser.length; j += 1) {
+      if (tasksUser[j].user) {
         for (let i = 0; i < users.length; i += 1) {
-          if (task.user === users[i].id) {
-            tasksUser[i].username = users[i].name;
-            tasksUser[i].username = users[i].color;
+          console.log('task before if condition:', tasksUser[j]);
+          if (tasksUser[j].user === users[i].id) {
+            console.log('user on users loop:', users[i]);
+            console.log('task on users loop:', tasksUser[j]);
+            tasksUser[j].username = users[i].name;
+            tasksUser[j].userColor = users[i].color;
+            break;
           }
         }
       }
-    });
+    }
+    console.log('tasks after adding user details:', tasksUser);
     this.setState({
       tasks: tasksUser,
     });
@@ -110,11 +115,10 @@ class Home extends Component {
       isToggleOff,
       collectionId,
       collections,
-      users,
     } = this.state;
 
     console.log('collectionscheck, ', collections);
-    console.log('users, ', users);
+    console.log('tasks, ', tasks);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
@@ -122,6 +126,11 @@ class Home extends Component {
         <Table.Row key={task.id}>
           <Table.Cell>
             { task.title }
+          </Table.Cell>
+          <Table.Cell>
+            <Label color={task.userColor} horizontal>
+              {task.username}
+            </Label>
           </Table.Cell>
           <Table.Cell>
             <input type="checkbox" onClick={() => this.doTask(index)} style={{ backgroundColor: '#00ffbf' }} />
@@ -144,7 +153,7 @@ class Home extends Component {
         <Table className="table" textAlign="center" style={{ backgroundColor: 'white' }}>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan="2">
+              <Table.HeaderCell colSpan="3">
                 <Button toggle onClick={this.toDo} active={!isToggleOff} style={{ fontSize: '1vw' }}>
                   {isToggleOff ? 'Tasks' : 'TODO'}
                 </Button>

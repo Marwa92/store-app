@@ -3,7 +3,6 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import CollectionsList from './CollectionsList';
 import TasksTodo from './Taskstodo';
-import Users from './Users';
 
 const CollectionsRoute = props => (
   <div>
