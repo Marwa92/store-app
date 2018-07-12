@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Table, Button } from 'semantic-ui-react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from './Header';
-// import FormBox from './FormBox';
-import CollectionsList from './CollectionsList';
-import TasksTodo from './Taskstodo';
 import BE from './BE';
+import CollectionsRoute from './Routing';
 
 
 class Home extends Component {
@@ -17,13 +15,13 @@ class Home extends Component {
       isToggleOff: true,
       collectionId: 0,
       collections: [],
+      users: [],
     };
     this.addTask = this.addTask.bind(this);
     this.doTask = this.doTask.bind(this);
     this.toDo = this.toDo.bind(this);
     this.displayTasks = this.displayTasks.bind(this);
-    // this.addCollection = this.addCollection.bind(this);
-    // this.chooseCollection = this.chooseCollection.bind(this);
+    this.accessUser = this.accessUser.bind(this);
   }
 
   // collectionsList = response
@@ -33,6 +31,10 @@ class Home extends Component {
     // ({tasks})=> ({tasks(defined in state as array): tasks(defined from DB)})
     const collectionsList = await BE.getCollection();
     console.log('collectionsList, ', collectionsList);
+    const users = await BE.getUsers();
+    console.log('users from db:', users);
+    await this.accessUser(tasks, users);
+
     const items = [
       {
         text: 'All',
@@ -52,10 +54,8 @@ class Home extends Component {
     });
     this.setState({
       collections: items,
-      tasks,
+      users,
     });
-    console.log('collectionstest, ', collectionsList);
-    console.log('itemstest, ', items);
   }
 
   async addTask(newTask, e) {
@@ -86,15 +86,35 @@ class Home extends Component {
     this.setState({ collectionId });
   }
 
+  accessUser(tasks, users) {
+    const tasksUser = tasks;
+    tasks.forEach((task) => {
+      if (task.user) {
+        for (let i = 0; i < users.length; i += 1) {
+          if (task.user === users[i].id) {
+            tasksUser[i].username = users[i].name;
+            tasksUser[i].username = users[i].color;
+          }
+        }
+      }
+    });
+    this.setState({
+      tasks: tasksUser,
+    });
+  }
+
+
   render() {
     const {
       tasks,
       isToggleOff,
       collectionId,
       collections,
+      users,
     } = this.state;
 
     console.log('collectionscheck, ', collections);
+    console.log('users, ', users);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
@@ -115,11 +135,12 @@ class Home extends Component {
     return (
       <div className="Home" style={{ width: '75%', margin: 'auto' }}>
         <Header />
-        <CollectionsList
+        <CollectionsRoute
           collectionsList={this.state.collections}
           displayTasks={this.displayTasks}
+          addTask={this.addTask}
+          collectionId={this.state.collectionId}
         />
-        <TasksTodo handleSubmit={this.addTask} />
         <Table className="table" textAlign="center" style={{ backgroundColor: 'white' }}>
           <Table.Header>
             <Table.Row>

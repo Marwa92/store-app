@@ -32,6 +32,18 @@ class TasksList extends Component {
     }
   }
 
+  // static async postUser() {
+  //   try {
+  //     const response = await axios.post(`${port}/users`, {
+  //     });
+  //     console.log(response.data);
+  //     return (response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //     return [];
+  //   }
+  // }
+
   static async getTasks() {
     try {
       const response = await axios.get(`${port}/tasks`);
@@ -47,6 +59,17 @@ class TasksList extends Component {
     try {
       const response = await axios.get(`${port}/collections`);
       console.log('Collections from db', response.data);
+      return (response.data);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
+  static async getUsers() {
+    try {
+      const response = await axios.get(`${port}/users`);
+      console.log('users from db', response.data);
       return (response.data);
     } catch (error) {
       console.error(error);

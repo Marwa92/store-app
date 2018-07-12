@@ -4,80 +4,36 @@
       "id": 1,
       "title": "Open PC",
       "completed": false,
-      "collection": 1
+      "collection": 1,
+      "user": 1
     },
     {
       "id": 2,
       "title": "Open Atom",
       "completed": true,
-      "collection": 1
+      "collection": 1,
+      "user": 1
     },
     {
       "id": 3,
       "title": "Have fun",
       "completed": false,
-      "collection": 2
+      "collection": 2,
+      "user": 1
     },
     {
       "id": 4,
       "title": "Sleep",
       "completed": false,
-      "collection": 2
+      "collection": 2,
+      "users": 1
     },
     {
       "id": 5,
       "title": "watch movie",
       "completed": false,
-      "collection": 2
-    },
-    {
-      "title": "Remember",
-      "completed": false,
-      "id": 6,
-      "collection": 1
-    },
-    {
-      "title": "for ",
-      "completed": false,
-      "id": 7,
-      "collection": 1
-    },
-    {
-      "title": "test",
-      "completed": false,
-      "id": 8
-    },
-    {
-      "title": "fv",
-      "completed": false,
-      "id": 9
-    },
-    {
-      "title": "df",
-      "completed": false,
-      "id": 10
-    },
-    {
-      "title": "test",
-      "completed": false,
-      "id": 11
-    },
-    {
-      "title": "hjgytg",
-      "completed": false,
-      "id": 12
-    },
-    {
-      "title": "run",
-      "completed": false,
       "collection": 2,
-      "id": 13
-    },
-    {
-      "title": "tc",
-      "completed": false,
-      "collection": 4,
-      "id": 14
+      "user": 1
     }
   ],
   "collections": [
@@ -100,50 +56,26 @@
     {
       "name": "hjg",
       "id": 5
-    },
-    {
-      "name": "uguy",
-      "id": 6
-    },
-    {
-      "name": "yyy",
-      "id": 7
-    },
-    {
-      "name": "xds",
-      "id": 8
-    },
-    {
-      "name": "abc",
-      "id": 9
-    },
-    {
-      "name": "nmbjh",
-      "id": 10
-    },
-    {
-      "name": ",mn j",
-      "id": 11
-    },
-    {
-      "name": "test",
-      "id": 12
-    },
-    {
-      "name": "jhbjh",
-      "id": 13
-    },
-    {
-      "name": "marwa",
-      "id": 14
-    },
-    {
-      "name": "marwa",
-      "id": 15
-    },
-    {
-      "name": "test",
-      "id": 16
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Ahmed",
+      "coLor": "#ff8080"
+    },
+    {
+      "id": 2,
+      "name": "Esraa",
+      "coLor": "pink"
+    },  {
+        "id": 3,
+        "name": "Marwa",
+        "coLor": "blue"
+      },  {
+          "id": 4,
+          "name": "Mohamed",
+          "coLor": " #66ffc2"
+        }
   ]
 }

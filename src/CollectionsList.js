@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Dropdown } from 'semantic-ui-react';
 import BE from './BE';
 
@@ -19,8 +18,15 @@ class CollectionsList extends React.Component {
     const { collectionsList } = this.props;
     // const options = collectionsList.map(({ id, name }) => ({ value: id, text: name }));
     const { collections } = this.state;
+    const collectionId = Number(this.props.match.params.collectionId) ?
+      Number(this.props.match.params.collectionId) : 0;
+    console.log('check collectionId route,', collectionId);
     console.log('collections from collectionList state:', collectionsList);
-    this.setState({ collections: collections.concat(collectionsList) });
+    this.setState({
+      collections: collections.concat(collectionsList),
+      currentValue: collectionId,
+    });
+    this.props.displayTasks(collectionId);
   }
 
   async addCollection(e, { value }) {

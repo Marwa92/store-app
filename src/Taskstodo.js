@@ -1,14 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Form } from 'semantic-ui-react';
-import BE from './BE';
 
 class TasksTodo extends React.Component {
 
   constructor(props) {
   super(props);
   this.state = {
-  currentValue: 0,
+  value: '',
 };
 
   this.handleChange = this.handleChange.bind(this);
@@ -31,7 +29,8 @@ resetValue(e) {
 
 
   render(){
-     const { currentValue} = this.state;
+     const currentValue=this.props.currentValue;
+     console.log('check collectionid,', currentValue);
 
     return (
       <div>
