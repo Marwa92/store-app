@@ -4,6 +4,7 @@ import { Table, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
+import UsersControl from './HandelingUsers'
 import CollectionsRoute from './Routing';
 
 
@@ -15,7 +16,7 @@ class Home extends Component {
       isToggleOff: true,
       collectionId: 0,
       collections: [],
-      users: [],
+      usersList: [],
     };
     this.addTask = this.addTask.bind(this);
     this.doTask = this.doTask.bind(this);
@@ -56,6 +57,21 @@ class Home extends Component {
       collections: items,
       users,
     });
+
+    const uitems = [];
+    users.forEach((user) => {
+      const usr = {
+        text: user.name,
+        value: user.id,
+        label: { color: user.color },
+        to: `/u/${user.id}`,
+        as: Link,
+      };
+      uitems.push(usr);
+    });
+    this.setState({
+      usersList: uitems,
+    });
   }
 
   async addTask(newTask, e) {
@@ -70,7 +86,7 @@ class Home extends Component {
   doTask(index) {
     const { tasks } = this.state;
     tasks[index].completed = !tasks[index].completed;
-    this.setScollectionsListtate({
+    this.setState({
       tasks,
     });
   }
@@ -91,6 +107,7 @@ class Home extends Component {
     for (let j = 0; j < tasksUser.length; j += 1) {
       if (tasksUser[j].user) {
         for (let i = 0; i < users.length; i += 1) {
+          console.log('users before if condition:', users);
           console.log('task before if condition:', tasksUser[j]);
           if (tasksUser[j].user === users[i].id) {
             console.log('user on users loop:', users[i]);
@@ -103,6 +120,7 @@ class Home extends Component {
       }
     }
     console.log('tasks after adding user details:', tasksUser);
+    console.log('usersId, ', users.id);
     this.setState({
       tasks: tasksUser,
     });
@@ -115,10 +133,12 @@ class Home extends Component {
       isToggleOff,
       collectionId,
       collections,
+      usersList,
     } = this.state;
 
     console.log('collectionscheck, ', collections);
     console.log('tasks, ', tasks);
+    console.log('users,', usersList);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
@@ -153,10 +173,16 @@ class Home extends Component {
         <Table className="table" textAlign="center" style={{ backgroundColor: 'white' }}>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan="3">
+              <Table.HeaderCell colSpan="2">
                 <Button toggle onClick={this.toDo} active={!isToggleOff} style={{ fontSize: '1vw' }}>
                   {isToggleOff ? 'Tasks' : 'TODO'}
                 </Button>
+              </Table.HeaderCell>
+              <Table.HeaderCell colSpan="1">
+                <UsersControl
+                  usersList={this.state.usersList}
+                //  userId={this.state.userId}
+                />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>

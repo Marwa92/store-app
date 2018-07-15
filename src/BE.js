@@ -32,17 +32,18 @@ class TasksList extends Component {
     }
   }
 
-  // static async postUser() {
-  //   try {
-  //     const response = await axios.post(`${port}/users`, {
-  //     });
-  //     console.log(response.data);
-  //     return (response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //     return [];
-  //   }
-  // }
+  static async postUser(newUser) {
+    try {
+      const response = await axios.post(`${port}/users`, {
+        name: newUser
+      });
+      console.log(response.data);
+      return (response.data);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
 
   static async getTasks() {
     try {

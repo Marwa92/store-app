@@ -16,6 +16,7 @@ class CollectionsList extends React.Component {
 
   async componentDidMount() {
     const { collectionsList } = this.props;
+    console.log('collectionList in async,', collectionsList);
     // const options = collectionsList.map(({ id, name }) => ({ value: id, text: name }));
     const { collections } = this.state;
     const collectionId = Number(this.props.match.params.collectionId) ?
@@ -55,6 +56,7 @@ class CollectionsList extends React.Component {
     const { currentValue } = this.state;
     console.log('collection on collectionList render:', this.props.collectionsList);
     const collections = this.props.collectionsList;
+    console.log('options:', collections);
     return (
       <div>
         <Dropdown
