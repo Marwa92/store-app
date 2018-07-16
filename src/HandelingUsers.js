@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Button } from 'semantic-ui-react';
+import ColorPicker from './ColorPicker';
 import BE from './BE';
 
 class UsersControl extends React.Component {
@@ -30,7 +31,7 @@ class UsersControl extends React.Component {
   async addUser(e, { value }) {
     const { users } = this.state;
     console.log('CHECK user id, ', value);
-    console.log('users in component:', users);
+    console.log('users in component:', users.color);
     console.log('New user value:', value);
     const addUser = await BE.postUser(value);
     console.log('addUser id, ', addUser);
@@ -59,6 +60,7 @@ class UsersControl extends React.Component {
         <Dropdown
           options={usersList}
           placeholder="Add new User"
+        //  pointing="left"
           search
           selection
           fluid

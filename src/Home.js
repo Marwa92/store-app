@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Table, Button, Label } from 'semantic-ui-react';
+import { Table, Button, Label, Grid,
+} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
 import UsersControl from './HandelingUsers'
+import UserTask from './UserTask'
 import CollectionsRoute from './Routing';
 
 
@@ -138,7 +140,7 @@ class Home extends Component {
 
     console.log('collectionscheck, ', collections);
     console.log('tasks, ', tasks);
-    console.log('users,', usersList);
+    console.log('users from parent,', usersList);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
@@ -179,10 +181,17 @@ class Home extends Component {
                 </Button>
               </Table.HeaderCell>
               <Table.HeaderCell colSpan="1">
-                <UsersControl
-                  usersList={this.state.usersList}
-                //  userId={this.state.userId}
-                />
+                <Grid columns={2}>
+                  <Grid.Column>
+                    <Button className="Element" color={TasksList.userColor} />
+                  </Grid.Column>
+                  <Grid.Column>
+                    <UsersControl
+                      className="Element"
+                      usersList={this.state.usersList}
+                    />
+                  </Grid.Column>
+                </Grid>
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
