@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Table, Button, Label, Grid,
-} from 'semantic-ui-react';
+import { Table, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
@@ -17,6 +16,8 @@ class Home extends Component {
       tasks: [],
       isToggleOff: true,
       collectionId: 0,
+      color: 'yellow',
+      // userId: 0,=====>handle user routing
       collections: [],
       usersList: [],
     };
@@ -25,6 +26,7 @@ class Home extends Component {
     this.toDo = this.toDo.bind(this);
     this.displayTasks = this.displayTasks.bind(this);
     this.accessUser = this.accessUser.bind(this);
+  //  this.displayUserTasks = this.displayUserTasks.bind(this);====> handle user routing
   }
 
   // collectionsList = response
@@ -37,6 +39,7 @@ class Home extends Component {
     const users = await BE.getUsers();
     console.log('users from db:', users);
     await this.accessUser(tasks, users);
+    const { color } = this.state;
 
     const items = [
       {
@@ -57,10 +60,17 @@ class Home extends Component {
     });
     this.setState({
       collections: items,
-      users,
     });
 
-    const uitems = [];
+    const uitems = [
+      {
+        text: 'All',
+        value: 0,
+        to: '/',
+        label: { color },
+        as: Link,
+      },
+    ];
     users.forEach((user) => {
       const usr = {
         text: user.name,
@@ -100,9 +110,14 @@ class Home extends Component {
   }
 
   displayTasks(collectionId) {
-    console.log('check,', collectionId);
+  //  console.log('check,', collectionId);
     this.setState({ collectionId });
   }
+
+  // displayUserTasks(userId) {
+  //   console.log('check for display,', userId);====> handle user routing
+  //   this.setState({ userId });
+  // }
 
   accessUser(tasks, users) {
     const tasksUser = tasks;
@@ -122,10 +137,12 @@ class Home extends Component {
       }
     }
     console.log('tasks after adding user details:', tasksUser);
-    console.log('usersId, ', users.id);
+
     this.setState({
       tasks: tasksUser,
+      users,
     });
+    console.log('user on users test:', users);
   }
 
 
@@ -136,10 +153,12 @@ class Home extends Component {
       collectionId,
       collections,
       usersList,
+      users,
     } = this.state;
 
     console.log('collectionscheck, ', collections);
     console.log('tasks, ', tasks);
+    console.log('users from parent,', users);
     console.log('users from parent,', usersList);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
@@ -181,21 +200,18 @@ class Home extends Component {
                 </Button>
               </Table.HeaderCell>
               <Table.HeaderCell colSpan="1">
-                <Grid columns={2}>
-                  <Grid.Column>
-                    <Button className="Element" color={TasksList.userColor} />
-                  </Grid.Column>
-                  <Grid.Column>
-                    <UsersControl
-                      className="Element"
-                      usersList={this.state.usersList}
-                    />
-                  </Grid.Column>
-                </Grid>
+                <UsersControl
+                  className="Element"
+                  usersList={this.state.usersList}
+                  usersmenu={this.state.users}
+                  color={this.state.color}
+                  // displayUserTasks={this.displayUserTasks}====> handle user routing
+                  // userId={this.state.userId}====> handle user routing
+                />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body style={{ fontSize: '1vw', fontStyle: 'italic' }}>
+          <Table.Body style={{ fontSize:'1vw', fontStyle: 'italic' }}>
             {TasksList}
           </Table.Body>
         </Table>

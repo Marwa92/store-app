@@ -35,7 +35,7 @@ class TasksList extends Component {
   static async postUser(newUser) {
     try {
       const response = await axios.post(`${port}/users`, {
-        name: newUser
+        name: newUser,
       });
       console.log(response.data);
       return (response.data);
