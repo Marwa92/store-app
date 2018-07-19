@@ -82,88 +82,12 @@
     {
       "id": 3,
       "name": "Marwa",
-      "color": #ff0055,
+      "color":"blue"
     },
     {
       "id": 4,
       "name": "Mohamed",
       "color": "purple"
-    },
-    {
-      "name": "test",
-      "id": 5
-    },
-    {
-      "name": "hello",
-      "id": 6
-    },
-    {
-      "name": "tt",
-      "id": 7
-    },
-    {
-      "name": "hussien",
-      "id": 8
-    },
-    {
-      "name": "randa",
-      "id": 9
-    },
-    {
-      "name": "soha",
-      "id": 10
-    },
-    {
-      "name": "ta",
-      "id": 11
-    },
-    {
-      "name": "tee",
-      "id": 12
-    },
-    {
-      "name": "test1",
-      "id": 13
-    },
-    {
-      "name": "good",
-      "id": 14
-    },
-    {
-      "name": "ttt",
-      "id": 15
-    },
-    {
-      "name": "check",
-      "id": 16
-    },
-    {
-      "name": "checkk",
-      "id": 17
-    },
-    {
-      "name": "mm",
-      "id": 18
-    },
-    {
-      "name": "mark",
-      "id": 19
-    },
-    {
-      "name": "abdelrahman",
-      "id": 20
-    },
-    {
-      "name": "karim",
-      "id": 21
-    },
-    {
-      "name": "testl",
-      "id": 22
-    },
-    {
-      "name": "kamel",
-      "id": 23
     }
   ]
 }

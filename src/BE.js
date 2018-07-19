@@ -3,12 +3,13 @@ import axios from 'axios';
 
 const port = 'http://localhost:3001';
 class TasksList extends Component {
-  static async postTasks(newTask, collectionId) {
+  static async postTasks(newTask, collectionId, userId) {
     try {
       const response = await axios.post(`${port}/tasks`, {
         title: newTask,
         completed: false,
         collection: collectionId,
+        user: userId,
       });
       console.log(response.data);
       return (response.data);
@@ -32,10 +33,11 @@ class TasksList extends Component {
     }
   }
 
-  static async postUser(newUser) {
+  static async postUser(newUser, color) {
     try {
       const response = await axios.post(`${port}/users`, {
         name: newUser,
+        color,
       });
       console.log(response.data);
       return (response.data);

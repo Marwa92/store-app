@@ -17,7 +17,7 @@ class Home extends Component {
       isToggleOff: true,
       collectionId: 0,
       color: 'yellow',
-      // userId: 0,=====>handle user routing
+      userId: 0,
       collections: [],
       usersList: [],
     };
@@ -205,6 +205,7 @@ class Home extends Component {
                   usersList={this.state.usersList}
                   usersmenu={this.state.users}
                   color={this.state.color}
+                  userId={this.state.usersId}
                   // displayUserTasks={this.displayUserTasks}====> handle user routing
                   // userId={this.state.userId}====> handle user routing
                 />
