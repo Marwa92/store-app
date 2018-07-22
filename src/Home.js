@@ -212,7 +212,7 @@ class Home extends Component {
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body style={{ fontSize:'1vw', fontStyle: 'italic' }}>
+          <Table.Body style={{ fontSize: '1vw', fontStyle: 'italic' }}>
             {TasksList}
           </Table.Body>
         </Table>
