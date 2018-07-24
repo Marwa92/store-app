@@ -36,8 +36,9 @@ class UsersControl extends React.Component {
   }
 
   async addUser(e, { value }) {
-    const { users, color } = this.state;
-    // const { userId } = this.props;
+    const { users } = this.state;
+    const { color } = this.props;
+    // const { userId } = this.props;color={this.state.color}
     console.log('CHECK user name, ', value);
     console.log('users color:', users);
     console.log('New user value:', value);
@@ -69,13 +70,12 @@ class UsersControl extends React.Component {
     this.setState({
       selectedUser,
     });
-
+    this.props.changeUserColor(selectedUser.label.style.backgroundColor);
+console.log('selectedUser color for user setState:', selectedUser.label.style.backgroundColor);
     console.log('selectedUser for user setState:', selectedUser);
     // console.log('color for user:', color);
     // this.props.displayUserTasks(value);====> handle user routing
   }
-
-
 
   render() {
     const { currentValue, selectedUser } = this.state;
@@ -83,6 +83,7 @@ class UsersControl extends React.Component {
     const { color } = this.props;
     console.log('selectedUser for user render:', selectedUser);
     console.log('color from props:', color);
+//    console.log('color from  selectedUser render:', selectedUser.label.color);
     const { usersList } = this.props;
     console.log('users options:', usersList);
     return (
@@ -90,9 +91,9 @@ class UsersControl extends React.Component {
         <Grid columns={2}>
           <Grid.Column>
             {selectedUser ? (
-              <ColorPicker className="Element" color={this.state.selectedUser.label.color} selectedUser={this.state.selectedUser} />
+              <ColorPicker className="Element" color={this.props.color} selectedUser={this.state.selectedUser} handleChange={this.props.handleChange} />
             ) : (
-              <ColorPicker className="Element" color={color} />
+              <ColorPicker className="Element" color={this.props.color} handleChange={this.props.handleChange} />
             )}
           </Grid.Column>
           <Grid.Column>

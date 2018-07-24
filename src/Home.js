@@ -16,7 +16,7 @@ class Home extends Component {
       tasks: [],
       isToggleOff: true,
       collectionId: 0,
-      color: 'yellow',
+      color: 'rgb(230, 184, 0)',
       userId: 0,
       collections: [],
       usersList: [],
@@ -26,6 +26,9 @@ class Home extends Component {
     this.toDo = this.toDo.bind(this);
     this.displayTasks = this.displayTasks.bind(this);
     this.accessUser = this.accessUser.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.changeUserColor = this.changeUserColor.bind(this);
+    // this.recieveNewColor = this.recieveNewColor.bind(this);
   //  this.displayUserTasks = this.displayUserTasks.bind(this);====> handle user routing
   }
 
@@ -67,7 +70,7 @@ class Home extends Component {
         text: 'All',
         value: 0,
         to: '/',
-        label: { color },
+        label: { style: { backgroundColor: color } },
         as: Link,
       },
     ];
@@ -75,7 +78,7 @@ class Home extends Component {
       const usr = {
         text: user.name,
         value: user.id,
-        label: { color: user.color },
+        label: { style: { backgroundColor: user.color } },
         to: `/u/${user.id}`,
         as: Link,
       };
@@ -111,10 +114,10 @@ class Home extends Component {
 
   displayTasks(collectionId) {
   //  console.log('check,', collectionId);
-    this.setState({ collectionId });
+    this.setState({ collecctionId });
   }
 
-  // displayUserTasks(userId) {
+  // displayUserTasks(urecieveNewColorserId) {
   //   console.log('check for display,', userId);====> handle user routing
   //   this.setState({ userId });
   // }
@@ -145,6 +148,21 @@ class Home extends Component {
     console.log('user on users test:', users);
   }
 
+  handleChange(color, event) {
+    console.log('On handleChange color:', color);
+    console.log('handleChange event:', event);
+    this.setState({ color: color.rgb });
+    // this.recieveNewColor(color);
+    // console.log('rgb colors in state:', this.state.color);
+  }
+
+  changeUserColor(color) {
+    this.setState({ color });
+  }
+
+  // recieveNewColor(color) {
+  //   this.setState({ color: color.rgb });
+  // }
 
   render() {
     const {
@@ -159,7 +177,7 @@ class Home extends Component {
     console.log('collectionscheck, ', collections);
     console.log('tasks, ', tasks);
     console.log('users from parent,', users);
-    console.log('users from parent,', usersList);
+    console.log('users from usersList,', usersList);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
@@ -169,7 +187,7 @@ class Home extends Component {
             { task.title }
           </Table.Cell>
           <Table.Cell>
-            <Label color={task.userColor} horizontal>
+            <Label style={{ backgroundColor: task.userColor }} horizontal>
               {task.username}
             </Label>
           </Table.Cell>
@@ -206,6 +224,8 @@ class Home extends Component {
                   usersmenu={this.state.users}
                   color={this.state.color}
                   userId={this.state.usersId}
+                  handleChange={this.handleChange}
+                  changeUserColor={this.changeUserColor}
                   // displayUserTasks={this.displayUserTasks}====> handle user routing
                   // userId={this.state.userId}====> handle user routing
                 />

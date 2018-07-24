@@ -10,7 +10,7 @@ class ColorPicker extends React.Component {
     // const{color}= this.props;
     this.state = {
       displayColorPicker: false,
-      color: props.color,
+    //  color: props.color,
       //  color: {
       //   r: '241',
       //   g: '112',
@@ -21,7 +21,7 @@ class ColorPicker extends React.Component {
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+  //  this.handleChange = this.handleChange.bind(this);
   }
 
   handleClick() {
@@ -33,12 +33,12 @@ class ColorPicker extends React.Component {
     this.setState({ displayColorPicker: false });
   }
 
-  handleChange(color, event) {
-    console.log('On handleChange color:', color);
-    console.log('handleChange event:', event);
-    this.setState({ color: color.rgb });
-    // console.log('rgb colors in state:', this.state.color);
-  }
+  // handleChange(color, event) {
+  //   console.log('On handleChange color:', color);
+  //   console.log('handleChange event:', event);
+  //   this.setState({ color: color.rgb });
+  //   // console.log('rgb colors in state:', this.state.color);
+  // }
 
 
   render() {
@@ -55,7 +55,8 @@ class ColorPicker extends React.Component {
     // }
 
     const { selectedUser } = this.props;
-    const { color, displayColorPicker } = this.state;
+    const { displayColorPicker } = this.state;
+    const { color } = this.props;
     const styles = reactCSS({
       default: {
         color: {
@@ -82,25 +83,42 @@ class ColorPicker extends React.Component {
           right: '0px',
           bottom: '0px',
           left: '0px',
+
         },
       },
     });
     console.log('color in color picker props:', color);
     console.log('selectedUser in ColorPicker:', selectedUser);
+    // { selectedUser &&
+    // console.log('check color in color picker:',this.props.selectedUser.label.color)}
     return (
       <div>
-        <Button onClick={this.handleClick} color={color}>
+        {selectedUser ? (
+          <Button onClick={this.handleClick} style={{ backgroundColor: this.props.color }}>
           choose user color
-        </Button>
+          </Button>
+        ) : (
+          <Button onClick={this.handleClick} style={{ backgroundColor: this.props.color }}>
+          choose user
+          </Button>
+        )}
+
         { displayColorPicker ? (
           <div style={styles.popover}>
             <div style={styles.cover} onClick={this.handleClose} />
-            <SketchPicker color={color} onChange={this.handleChange} />
+            {selectedUser && (
+              <SketchPicker
+                color={this.props.color}
+                onChange={this.props.handleChange}
+              />
+            )
+          }
           </div>
         ) : null }
       </div>
     );
   }
 }
+
 
 export default ColorPicker;

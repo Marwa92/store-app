@@ -40,6 +40,24 @@
       "completed": false,
       "collection": 3,
       "id": 6
+    },
+    {
+      "title": "check the app",
+      "completed": false,
+      "collection": 1,
+      "id": 7
+    },
+    {
+      "title": "survey",
+      "completed": false,
+      "collection": "project",
+      "id": 8
+    },
+    {
+      "title": "test",
+      "completed": false,
+      "collection": 8,
+      "id": 9
     }
   ],
   "collections": [
@@ -66,28 +84,41 @@
     {
       "name": "test",
       "id": 6
+    },
+    {
+      "name": "school",
+      "id": 7
+    },
+    {
+      "name": "project",
+      "id": 8
     }
   ],
   "users": [
     {
       "id": 1,
       "name": "Ahmed",
-      "color": "violet"
+      "color": "rgb(102, 0, 204)"
     },
     {
       "id": 2,
       "name": "Esraa",
-      "color": "pink"
+      "color": "rgb(230, 0, 92)"
     },
     {
       "id": 3,
       "name": "Marwa",
-      "color":"blue"
+      "color": "rgb(0, 115, 230)"
     },
     {
       "id": 4,
       "name": "Mohamed",
-      "color": "purple"
+      "color": "rgb(153, 0, 204)"
+    },
+    {
+      "name": "ziad",
+      "color": "rgb(230, 184, 0)",
+      "id": 5
     }
   ]
 }
