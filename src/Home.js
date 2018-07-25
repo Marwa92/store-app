@@ -114,11 +114,11 @@ class Home extends Component {
 
   displayTasks(collectionId) {
   //  console.log('check,', collectionId);
-    this.setState({ collecctionId });
+    this.setState({ collectionId });
   }
 
-  // displayUserTasks(urecieveNewColorserId) {
-  //   console.log('check for display,', userId);====> handle user routing
+  // displayUserTasks(userId) {
+  //   console.log('check for display,', userI5d);====> handle user routing
   //   this.setState({ userId });
   // }
 
@@ -127,7 +127,7 @@ class Home extends Component {
     for (let j = 0; j < tasksUser.length; j += 1) {
       if (tasksUser[j].user) {
         for (let i = 0; i < users.length; i += 1) {
-          console.log('users before if condition:', users);
+          console.log('users id before if condition:', users[i]);
           console.log('task before if condition:', tasksUser[j]);
           if (tasksUser[j].user === users[i].id) {
             console.log('user on users loop:', users[i]);
@@ -149,9 +149,27 @@ class Home extends Component {
   }
 
   handleChange(color, event) {
+    const { users } = this.state;
+    if (users) {
+      const i = 0;
+      if (users[i].id) {
+        users[i].color = color.rgb;
+        console.log('users id in loop :', users.id);
+        console.log('users color in loop :', users.color);
+      }
+    }
+
+    //  const handleChange = await BE.postUser(user.color);
+
+    console.log('users on handleChange:', users.id);
     console.log('On handleChange color:', color);
     console.log('handleChange event:', event);
-    this.setState({ color: color.rgb });
+    this.setState({
+      color: color.rgb,
+      users,
+    });
+    console.log('user after loop:', users);
+    console.log('color after loop:', color);
     // this.recieveNewColor(color);
     // console.log('rgb colors in state:', this.state.color);
   }
@@ -160,9 +178,6 @@ class Home extends Component {
     this.setState({ color });
   }
 
-  // recieveNewColor(color) {
-  //   this.setState({ color: color.rgb });
-  // }
 
   render() {
     const {
@@ -177,7 +192,7 @@ class Home extends Component {
     console.log('collectionscheck, ', collections);
     console.log('tasks, ', tasks);
     console.log('users from parent,', users);
-    console.log('users from usersList,', usersList);
+    console.log('users from parent,', usersList);
     const TasksList = tasks.map((task, index) => (
       ((collectionId === task.collection || collectionId === 0)
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (

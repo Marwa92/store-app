@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Dropdown,
-  Button,
   Grid,
 } from 'semantic-ui-react';
 import ColorPicker from './ColorPicker';
@@ -52,9 +51,9 @@ class UsersControl extends React.Component {
   }
 
   chooseUser(e, { value }) {
-    // const color = this.state;
     const { usersList } = this.props;
     const { usersmenu } = this.props;
+    const { color } = this.props;
     console.log('users in choose usersList ,', usersList);
     console.log('users in choose usersmenu ,', usersmenu);
     console.log('id ,', value);
@@ -64,16 +63,19 @@ class UsersControl extends React.Component {
     usersList.forEach((user) => {
       if (user.value === value) {
         selectedUser = user;
+        console.log('check value: ', value);
       }
     });
 
     this.setState({
       selectedUser,
     });
-    this.props.changeUserColor(selectedUser.label.style.backgroundColor);
-console.log('selectedUser color for user setState:', selectedUser.label.style.backgroundColor);
+    { selectedUser ?
+      this.props.changeUserColor(selectedUser.label.style.backgroundColor)
+      : this.props.changeUserColor(color)
+    }
+// console.log('selectedUser color for user setState:', selectedUser.label.style.backgroundColor);
     console.log('selectedUser for user setState:', selectedUser);
-    // console.log('color for user:', color);
     // this.props.displayUserTasks(value);====> handle user routing
   }
 
@@ -83,7 +85,6 @@ console.log('selectedUser color for user setState:', selectedUser.label.style.ba
     const { color } = this.props;
     console.log('selectedUser for user render:', selectedUser);
     console.log('color from props:', color);
-//    console.log('color from  selectedUser render:', selectedUser.label.color);
     const { usersList } = this.props;
     console.log('users options:', usersList);
     return (
