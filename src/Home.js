@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Table, Button, Label } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
@@ -20,6 +20,7 @@ class Home extends Component {
       userId: 0,
       collections: [],
       usersList: [],
+      usersSubList: [],
       selectedUser: null,
       value: '',
     };
@@ -89,6 +90,7 @@ class Home extends Component {
     });
     this.setState({
       usersList: uitems,
+      usersSubList: this.state.usersList.splice(0, 1),
     });
   }
 
@@ -116,12 +118,10 @@ class Home extends Component {
   }
 
   displayTasks(collectionId) {
-  //  console.log('check,', collectionId);
     this.setState({ collectionId });
   }
 
   displayUserTasks(userId) {
-    console.log('check for display,', userId);
     this.setState({ userId });
   }
 
@@ -175,9 +175,8 @@ class Home extends Component {
       this.changeUserColor(selectedUser.label.style.backgroundColor)
       : this.changeUserColor(color)
     }
-// console.log('selectedUser color for user susersListetState:', selectedUser.label.style.backgroundColor);
     console.log('selectedUser for user setState:', selectedUser);
-   this.displayUserTasks(value);
+    this.displayUserTasks(value);
   }
 
   rgbColor(color) {
@@ -234,7 +233,7 @@ class Home extends Component {
     } = this.state;
 
     console.log('collectionscheck, ', collections);
-    console.log('tasks, ', tasks);
+    console.log('tasks: ', tasks);
     console.log('users from parent,', users);
     console.log('users from parent,', usersList);
     const TasksList = tasks.map((task, index) => (
@@ -242,14 +241,21 @@ class Home extends Component {
       && (userId === task.user || userId === 0))
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
         // {'we shouldnot replace (indecolor: colorx) with (tasks.id) '}
+        // <Label style={{ backgroundColor: task.userColor }} horizontal>
+        //   {task.username}
+        // </Label>
         <Table.Row key={task.id}>
           <Table.Cell>
             { task.title }
           </Table.Cell>
           <Table.Cell>
-            <Label style={{ backgroundColor: task.userColor }} horizontal>
+            <UserTask style={{ backgroundColor: task.userColor }} horizontal
+              usersList={this.state.usersList}
+              users={this.state.users}
+              userId={this.state.userId}
+            >
               {task.username}
-            </Label>
+            </UserTask>
           </Table.Cell>
           <Table.Cell>
             <input type="checkbox" onClick={() => this.doTask(index)} style={{ backgroundColor: '#00ffbf' }} />
