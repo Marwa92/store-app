@@ -47,6 +47,19 @@ class TasksList extends Component {
     }
   }
 
+  static async updateUserColor(id, color) {
+    try {
+      const response = await axios.patch(`${port}/users/${id}`, {
+        color,
+      });
+      console.log(response.data);
+      return (response.data);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
   static async getTasks() {
     try {
       const response = await axios.get(`${port}/tasks`);

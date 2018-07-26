@@ -10,34 +10,29 @@ class UsersControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
       users: [],
-      selectedUser: null,
     };
     this.addUser = this.addUser.bind(this);
-    this.chooseUser = this.chooseUser.bind(this);
   }
 
   async componentDidMount() {
-    const { usersList, userId } = this.props;
+    const { usersList } = this.props;
     console.log('users id in async,', usersList);
-    //  const options = collectionsList.map(({ id, name }) => ({ value: id, text: name }));
     const { users } = this.state;
-    // const userId = Number(this.props.match.params.userId) ?
-    //   Number(this.props.match.params.userId) : 0;====> handle user routing
+    const userId = Number(this.props.match.params.userId) ?
+      Number(this.props.match.params.userId) : 0;
 
     console.log('users from usersList state:', users);
     this.setState({
       users: users.concat(usersList),
       currentValue: userId,
-      userId,
     });
+    this.props.displayUserTasks(userId);
   }
 
   async addUser(e, { value }) {
     const { users } = this.state;
     const { color } = this.props;
-    // const { userId } = this.props;color={this.state.color}
     console.log('CHECK user name, ', value);
     console.log('users color:', users);
     console.log('New user value:', value);
@@ -50,39 +45,9 @@ class UsersControl extends React.Component {
     console.log('usersList in add user, ', addUser);
   }
 
-  chooseUser(e, { value }) {
-    const { usersList } = this.props;
-    const { usersmenu } = this.props;
-    const { color } = this.props;
-    console.log('users in choose usersList ,', usersList);
-    console.log('users in choose usersmenu ,', usersmenu);
-    console.log('id ,', value);
-
-    let selectedUser = null;
-
-    usersList.forEach((user) => {
-      if (user.value === value) {
-        selectedUser = user;
-        console.log('check value: ', value);
-      }
-    });
-
-    this.setState({
-      selectedUser,
-    });
-    { selectedUser ?
-      this.props.changeUserColor(selectedUser.label.style.backgroundColor)
-      : this.props.changeUserColor(color)
-    }
-// console.log('selectedUser color for user setState:', selectedUser.label.style.backgroundColor);
-    console.log('selectedUser for user setState:', selectedUser);
-    // this.props.displayUserTasks(value);====> handle user routing
-  }
 
   render() {
-    const { currentValue, selectedUser } = this.state;
-    // console.log('users on usersList render:', this.props.users);
-    const { color } = this.props;
+    const { color, selectedUser, userId } = this.props;
     console.log('selectedUser for user render:', selectedUser);
     console.log('color from props:', color);
     const { usersList } = this.props;
@@ -92,7 +57,7 @@ class UsersControl extends React.Component {
         <Grid columns={2}>
           <Grid.Column>
             {selectedUser ? (
-              <ColorPicker className="Element" color={this.props.color} selectedUser={this.state.selectedUser} handleChange={this.props.handleChange} />
+              <ColorPicker className="Element" color={this.props.color} selectedUser={this.props.selectedUser} handleChange={this.props.handleChange} />
             ) : (
               <ColorPicker className="Element" color={this.props.color} handleChange={this.props.handleChange} />
             )}
@@ -105,9 +70,9 @@ class UsersControl extends React.Component {
               selection
               fluid
               allowAdditions
-              value={currentValue}
+              value={userId}
               onAddItem={this.addUser}
-              onChange={this.chooseUser}
+              onChange={this.props.chooseUser}
             />
           </Grid.Column>
         </Grid>

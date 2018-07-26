@@ -4,7 +4,7 @@ import { Table, Button, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
 import BE from './BE';
-import UsersControl from './HandelingUsers'
+import UsersRoute from './UsersRouting'
 import UserTask from './UserTask'
 import CollectionsRoute from './Routing';
 
@@ -20,16 +20,19 @@ class Home extends Component {
       userId: 0,
       collections: [],
       usersList: [],
+      selectedUser: null,
+      value: '',
     };
     this.addTask = this.addTask.bind(this);
     this.doTask = this.doTask.bind(this);
     this.toDo = this.toDo.bind(this);
     this.displayTasks = this.displayTasks.bind(this);
     this.accessUser = this.accessUser.bind(this);
+    this.chooseUser = this.chooseUser.bind(this);
+    this.rgbColor = this.rgbColor.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.changeUserColor = this.changeUserColor.bind(this);
-    // this.recieveNewColor = this.recieveNewColor.bind(this);
-  //  this.displayUserTasks = this.displayUserTasks.bind(this);====> handle user routing
+    this.displayUserTasks = this.displayUserTasks.bind(this);
   }
 
   // collectionsList = response
@@ -40,7 +43,7 @@ class Home extends Component {
     const collectionsList = await BE.getCollection();
     console.log('collectionsList, ', collectionsList);
     const users = await BE.getUsers();
-    console.log('users from db:', users);
+    console.log('users from db:', users)
     await this.accessUser(tasks, users);
     const { color } = this.state;
 
@@ -117,10 +120,10 @@ class Home extends Component {
     this.setState({ collectionId });
   }
 
-  // displayUserTasks(userId) {
-  //   console.log('check for display,', userI5d);====> handle user routing
-  //   this.setState({ userId });
-  // }
+  displayUserTasks(userId) {
+    console.log('check for display,', userId);
+    this.setState({ userId });
+  }
 
   accessUser(tasks, users) {
     const tasksUser = tasks;
@@ -148,18 +151,60 @@ class Home extends Component {
     console.log('user on users test:', users);
   }
 
-  handleChange(color, event) {
+  chooseUser(e, { value }) {
+    const { usersList } = this.state;
     const { users } = this.state;
-    if (users) {
-      const i = 0;
-      if (users[i].id) {
-        users[i].color = color.rgb;
-        console.log('users id in loop :', users.id);
-        console.log('users color in loop :', users.color);
-      }
-    }
+    const { color } = this.state;
+    console.log('users in choose usersList ,', usersList);
+    console.log('users in choose ,', users);
+    console.log('id ,', value);
 
-    //  const handleChange = await BE.postUser(user.color);
+    let selectedUser = null;
+
+    usersList.forEach((user) => {
+      if (user.value === value) {
+        selectedUser = user;
+        console.log('check value: ', value);
+      }
+    });
+
+    this.setState({
+      selectedUser,
+    });
+    { selectedUser ?
+      this.changeUserColor(selectedUser.label.style.backgroundColor)
+      : this.changeUserColor(color)
+    }
+// console.log('selectedUser color for user susersListetState:', selectedUser.label.style.backgroundColor);
+    console.log('selectedUser for user setState:', selectedUser);
+   this.displayUserTasks(value);
+  }
+
+  rgbColor(color) {
+    const { r, g, b } = color;
+    this.setState({ color });
+    return `rgb(${r},${g},${b})`;
+}
+
+  async handleChange(color, event) {
+    const { selectedUser, users } = this.state;
+    if (selectedUser) {
+      selectedUser.label.style.backgroundColor = this.rgbColor(color.rgb);
+      await BE.updateUserColor(selectedUser.value, selectedUser.label.style.backgroundColor);
+    }
+    users.forEach((user, index) => {
+      if (users[index].id === selectedUser.value) {
+        users[index].color = color.rgb;
+      }
+
+      console.log('selectedUser id in parent :', selectedUser);
+      console.log('Users in parent :', users);
+      console.log('users id in loop :', user.id);
+      console.log('users color in loop :', user.color);
+      console.log('selectedUser color:', selectedUser.label.style.backgroundColor);
+      console.log('users color:', color);
+    });
+
 
     console.log('users on handleChange:', users.id);
     console.log('On handleChange color:', color);
@@ -169,9 +214,7 @@ class Home extends Component {
       users,
     });
     console.log('user after loop:', users);
-    console.log('color after loop:', color);
-    // this.recieveNewColor(color);
-    // console.log('rgb colors in state:', this.state.color);
+    console.log('color after loop:', this.rgbColor(color.rgb));
   }
 
   changeUserColor(color) {
@@ -184,6 +227,7 @@ class Home extends Component {
       tasks,
       isToggleOff,
       collectionId,
+      userId,
       collections,
       usersList,
       users,
@@ -194,9 +238,10 @@ class Home extends Component {
     console.log('users from parent,', users);
     console.log('users from parent,', usersList);
     const TasksList = tasks.map((task, index) => (
-      ((collectionId === task.collection || collectionId === 0)
+      (((collectionId === task.collection || collectionId === 0)
+      && (userId === task.user || userId === 0))
       && (isToggleOff || (!isToggleOff && !tasks[index].completed))) ? (
-        // {'we shouldnot replace (index) with (tasks.id) '}
+        // {'we shouldnot replace (indecolor: colorx) with (tasks.id) '}
         <Table.Row key={task.id}>
           <Table.Cell>
             { task.title }
@@ -233,16 +278,16 @@ class Home extends Component {
                 </Button>
               </Table.HeaderCell>
               <Table.HeaderCell colSpan="1">
-                <UsersControl
+                <UsersRoute
                   className="Element"
                   usersList={this.state.usersList}
-                  usersmenu={this.state.users}
                   color={this.state.color}
-                  userId={this.state.usersId}
+                  userId={this.state.userId}
+                  selectedUser={this.state.selectedUser}
+                  chooseUser={this.chooseUser}
                   handleChange={this.handleChange}
                   changeUserColor={this.changeUserColor}
-                  // displayUserTasks={this.displayUserTasks}====> handle user routing
-                  // userId={this.state.userId}====> handle user routing
+                  displayUserTasks={this.displayUserTasks}
                 />
               </Table.HeaderCell>
             </Table.Row>

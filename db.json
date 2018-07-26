@@ -98,22 +98,22 @@
     {
       "id": 1,
       "name": "Ahmed",
-      "color": "rgb(102, 0, 204)"
+      "color": "rgb(80,227,194)"
     },
     {
       "id": 2,
       "name": "Esraa",
-      "color": "rgb(230, 0, 92)"
+      "color": "rgb(218,80,138)"
     },
     {
       "id": 3,
       "name": "Marwa",
-      "color": "rgb(0, 115, 230)"
+      "color": "rgb(184,233,134)"
     },
     {
       "id": 4,
       "name": "Mohamed",
-      "color": "rgb(153, 0, 204)"
+      "color": "rgb(208,2,27)"
     },
     {
       "name": "ziad",
