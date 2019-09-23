@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Products from './products'
+import ProductsGrid from './productsGrid'
 import axios from '../../utils/API';
+import { Box, Heading } from 'grommet'
+
 
 
 const ProductsPage = () => {
@@ -19,10 +21,14 @@ const ProductsPage = () => {
   console.log('productsList:', productsList);
   
   return(
-    <div>
-      Products
-      < Products />
-    </div>
+    <React.Fragment>
+    <Heading margin="medium" size="small">Products You May Like</Heading>
+    <Box margin={{ horizontal: 'xlarge' }}>
+      <ProductsGrid
+        storeProducts={productsList}
+      />
+    </Box>
+  </React.Fragment>
 
 )
 }
