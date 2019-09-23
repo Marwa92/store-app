@@ -21,7 +21,7 @@ const ProductCard = (props) => {
   } = props
 
   let HighlightedText
-  if(quantity<11 && quantity >0){
+  if(quantity<11 && quantity > 0){
     HighlightedText= <Text alignSelf="center" weight="bold" color="red">{`Hurry up only ${quantity} left!`}</Text>
   } else if(quantity === 0){
   HighlightedText= <Text alignSelf="center" weight="bold" color="red">Out Of Stock</Text>
