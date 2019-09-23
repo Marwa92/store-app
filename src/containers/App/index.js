@@ -1,14 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom'
+import ProductsPage from '../ProductsPage/index'
 
 
 
 const App = () => (
-    <Router>
-    <div>
-      test
-    </div>
-  </Router>
+  <Switch>
+  <Route
+    exact
+    path="/"
+    render={
+    ProductsPageProps => (
+      <ProductsPage
+        {...ProductsPageProps}
+      />
+    )
+  }
+  />
+</Switch>
 )
 
 export default App;
