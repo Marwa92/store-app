@@ -9,6 +9,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Sending Feedback](#sending-feedback)
 - [Folder Structure](#folder-structure)
 - [Available Scripts](#available-scripts)
+  - [json server](#json-server)
   - [npm start](#npm-start)
   - [npm test](#npm-test)
   - [npm run build](#npm-run-build)
@@ -2341,7 +2342,8 @@ GENERATE_SOURCEMAP | :x: | :white_check_mark: | When set to `false`, source maps
 NODE_PATH | :white_check_mark: |  :white_check_mark: | Same as [`NODE_PATH` in Node.js](https://nodejs.org/api/modules.html#modules_loading_from_the_global_folders), but only relative folders are allowed. Can be handy for emulating a monorepo setup by setting `NODE_PATH=src`.
 
 ## Troubleshooting
-### `json-server --watch products.json --port 3001`
+### `json-server`
+json-server --watch DB.json --port 3001
 ### `npm start` doesn’t detect changes
 
 When you save a file while `npm start` is running, the browser should refresh with the updated code.<br>
