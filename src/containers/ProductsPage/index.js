@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ProductsGrid from './productsGrid'
-import axios from '../../utils/API';
 import { Box, Heading } from 'grommet'
+import PropTypes from 'prop-types'
 
 
 
-const ProductsPage = () => {
-
-  const [productsList, setProductsList] = useState([])
-  async function fetchProductsAPI() {
-    const response = await axios('/products');
-    console.log('response:',response.data);
-    setProductsList(response.data)
-  }
-
-  useEffect(() => {
-    fetchProductsAPI()
-  }, [])
-
+const ProductsPage = (props) => {
+  const { productsList } = props
   console.log('productsList:', productsList);
   
   return(
@@ -32,5 +21,7 @@ const ProductsPage = () => {
 
 )
 }
-
+ProductsPage.propTypes = {
+productsList: PropTypes.arrayOf(PropTypes.any).isRequired,
+}
 export default ProductsPage;

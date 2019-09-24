@@ -1,0 +1,24 @@
+.ReactTable .rt-thead .rt-th,.ReactTable .rt-thead .rt-td{
+    color: #ffffff;
+    background-color: #000000;
+    border-radius: '7px';
+}
+
+.ReactTable .-pagination .-btn{
+    color: #ffffff;
+    background-color: #000000
+}
+
+.ReactTable .-pagination .-btn:not([disabled]):hover {
+    background: #000000;
+    color: #fff;
+}
+
+.ReactTable .rt-thead .rt-th.-sort-asc, .ReactTable .rt-thead .rt-td.-sort-asc {
+    box-shadow: inset 0 3px 0 0 #ffffff;
+   
+}
+
+.ReactTable .rt-thead .rt-th.-sort-desc, .ReactTable .rt-thead .rt-td.-sort-desc {
+    box-shadow: inset 0 -3px 0 0 #ffffff;
+}

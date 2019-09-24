@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import { Grommet, ResponsiveContext, Button } from 'grommet'
 import styled, { createGlobalStyle } from 'styled-components'
@@ -6,6 +6,7 @@ import ProductsPage from '../ProductsPage/Loadable'
 import OrdersPage from '../OrdersPage/Loadable'
 import Header from '../../components/Header/index'
 import Footer from '../../components/Footer/index'
+import axios from '../../utils/API';
 
 const Container = styled.body`
 height: 100%;
@@ -46,7 +47,32 @@ const defaultTheme = {
   },
 }
 
-const App = () => (
+const App = () =>{ 
+  const [productsList, setProductsList] = useState([])
+  const [ordersList, setOrdersList] = useState([])
+  async function fetchProductsAPI() {
+    const response = await axios('/products');
+    console.log('response:',response.data);
+    setProductsList(response.data)
+  }
+
+  useEffect(() =>{
+    fetchProductsAPI()
+  }, [])
+  // async function fetchOrdersAPI() {
+  //   const response = await axios('/orders');
+  //   console.log('response:',response.data);
+  //   setOrdersList(response.data)
+  // }
+
+  // useEffect(() =>{
+  //   fetchProductsAPI().then(fetchOrdersAPI())
+  // }, [])
+
+console.log('productsList:', productsList);
+
+
+  return(
   <Fragment>
    <Grommet theme={defaultTheme} full>
     <ResponsiveContext.Consumer>
@@ -64,6 +90,7 @@ const App = () => (
                 ProductsPageProps => (
                   <ProductsPage
                     {...ProductsPageProps}
+                    productsList={productsList}
                   />
                 )
               }
@@ -74,6 +101,7 @@ const App = () => (
                 OrdersPageProps => (
                   <OrdersPage
                     {...OrdersPageProps}
+                    productsList={productsList}
                   />
                 )
               }
@@ -89,6 +117,6 @@ const App = () => (
    </Grommet>
    <GlobalStyle />
   </Fragment>
-)
+)}
 
 export default App;
