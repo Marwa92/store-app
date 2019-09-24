@@ -2345,6 +2345,8 @@ NODE_PATH | :white_check_mark: |  :white_check_mark: | Same as [`NODE_PATH` in N
 ## Troubleshooting
 ### `json-server`
 json-server --watch DB.json --port 3001
+Open [http://localhost:30001](http://localhost:3001/products) to view products data as json.
+Open [http://localhost:3001/orders](http://localhost:3001/orders) to view orders data as json.
 ### `npm start` doesn’t detect changes
 
 When you save a file while `npm start` is running, the browser should refresh with the updated code.<br>
