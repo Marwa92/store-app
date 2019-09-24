@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import { Grommet, ResponsiveContext, Button } from 'grommet'
 import styled, { createGlobalStyle } from 'styled-components'
-import ProductsPage from '../ProductsPage/index'
+import ProductsPage from '../ProductsPage/Loadable'
+import OrdersPage from '../OrdersPage/Loadable'
 import Header from '../../components/Header/index'
 import Footer from '../../components/Footer/index'
 
@@ -63,6 +64,16 @@ const App = () => (
                 ProductsPageProps => (
                   <ProductsPage
                     {...ProductsPageProps}
+                  />
+                )
+              }
+              />
+                <Route
+                path="/orders"
+                render={
+                OrdersPageProps => (
+                  <OrdersPage
+                    {...OrdersPageProps}
                   />
                 )
               }
